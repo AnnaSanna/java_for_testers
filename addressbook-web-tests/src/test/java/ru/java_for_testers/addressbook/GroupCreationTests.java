@@ -34,7 +34,7 @@ public class GroupCreationTests {
     fillGroupForm(new GroupData("test1", "test2", "test3"));
     submitGroupCreation("submit");
     returnToGroupPage("groups");
-
+    logout("Logout");
   }
 
   private void returnToGroupPage(String groups) {
@@ -68,7 +68,6 @@ public class GroupCreationTests {
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
     wd.quit();
-    logout("Logout");
   }
 
   private void logout(String logout) {
