@@ -31,10 +31,10 @@ public class GroupCreationTests {
   public void testGroupCreation() throws Exception {
     gotoGroupPage("groups");
     initGroupCreation("new");
-    fillGroupForm();
+    fillGroupForm(new GroupData("test1", "test2", "test3"));
     submitGroupCreation("submit");
     returnToGroupPage("groups");
-    wd.findElement(By.linkText("Logout")).click();
+
   }
 
   private void returnToGroupPage(String groups) {
@@ -45,16 +45,16 @@ public class GroupCreationTests {
     wd.findElement(By.name(submit)).click();
   }
 
-  private void fillGroupForm() {
+  private void fillGroupForm(GroupData groupData) {
     wd.findElement(By.name("group_name")).click();
     wd.findElement(By.name("group_name")).clear();
-    wd.findElement(By.name("group_name")).sendKeys("test1");
+    wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
     wd.findElement(By.name("group_header")).click();
     wd.findElement(By.name("group_header")).clear();
-    wd.findElement(By.name("group_header")).sendKeys("test2");
+    wd.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
     wd.findElement(By.name("group_footer")).click();
     wd.findElement(By.name("group_footer")).clear();
-    wd.findElement(By.name("group_footer")).sendKeys("test3");
+    wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
   }
 
   private void initGroupCreation(String s) {
@@ -68,6 +68,11 @@ public class GroupCreationTests {
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
     wd.quit();
+    logout("Logout");
+  }
+
+  private void logout(String logout) {
+    wd.findElement(By.linkText(logout)).click();
   }
 
   private boolean isElementPresent(By by) {
