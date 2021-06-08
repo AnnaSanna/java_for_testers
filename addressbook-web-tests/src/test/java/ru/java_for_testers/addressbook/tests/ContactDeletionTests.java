@@ -7,10 +7,10 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testContactDeletion() throws Exception {
-    app.selectGroupOrContact("selected[]");
+    app.getGroupHelper().selectGroupOrContact("selected[]");
     app.deleteSelectedContacts(By.xpath("//input[@value='Delete']"));
     app.closeAlertWindow();
-    app.returnToHomePage();
+    app.getNavigationHelper().returnToHomePage();
   }
 
 }
