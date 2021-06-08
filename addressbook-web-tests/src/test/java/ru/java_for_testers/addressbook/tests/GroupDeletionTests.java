@@ -1,4 +1,4 @@
-package ru.java_for_testers.addressbook;
+package ru.java_for_testers.addressbook.tests;
 
 import org.testng.annotations.*;
 

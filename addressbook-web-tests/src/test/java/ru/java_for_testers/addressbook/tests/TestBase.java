@@ -1,7 +1,8 @@
-package ru.java_for_testers.addressbook;
+package ru.java_for_testers.addressbook.tests;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import ru.java_for_testers.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
