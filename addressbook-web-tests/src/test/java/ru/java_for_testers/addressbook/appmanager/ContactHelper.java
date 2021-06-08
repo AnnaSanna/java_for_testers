@@ -4,48 +4,37 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.java_for_testers.addressbook.model.ContactData;
 
-public class ContactHelper {
-  private WebDriver wd;
+public class ContactHelper extends HelperBase{
 
   public ContactHelper(WebDriver wd) {
-    this.wd = wd;
+    super(wd);
   }
 
   public void submitContactCreation(String s) {
-    wd.findElement(By.xpath(s)).click();
+    click(By.xpath(s));
   }
 
   public void fillContactForm(ContactData contactData) {
-    wd.findElement(By.name("firstname")).click();
-    wd.findElement(By.name("firstname")).clear();
-    wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
-    wd.findElement(By.name("lastname")).click();
-    wd.findElement(By.name("lastname")).clear();
-    wd.findElement(By.name("lastname")).sendKeys(contactData.getLastName());
-    wd.findElement(By.name("address")).click();
-    wd.findElement(By.name("address")).clear();
-    wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
-    wd.findElement(By.name("home")).click();
-    wd.findElement(By.name("home")).clear();
-    wd.findElement(By.name("home")).sendKeys(contactData.getTelephone());
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).clear();
-    wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
+    type(By.name("firstname"), contactData.getFirstName());
+    type(By.name("lastname"), contactData.getLastName());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("home"), contactData.getTelephone());
+    type(By.name("email"), contactData.getEmail());
   }
 
   public void initContactCreation(String s) {
-    wd.findElement(By.linkText(s)).click();
+    click(By.linkText(s));
   }
 
   public void closeAlertWindow() {
-    wd.switchTo().alert().accept();
+    closeWindow();
   }
 
   public void deleteSelectedContacts(By xpath) {
-    wd.findElement(xpath).click();
+    click(xpath);
   }
 
   public void selectGroupOrContact(String s) {
-    wd.findElement(By.name(s)).click();
+    click(By.name(s));
   }
 }
