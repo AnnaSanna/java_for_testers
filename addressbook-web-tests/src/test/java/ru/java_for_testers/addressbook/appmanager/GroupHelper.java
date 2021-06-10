@@ -35,4 +35,12 @@ public class GroupHelper extends HelperBase{
   public void selectGroupOrContact(String s) {
     click(By.name(s));
   }
+
+  public void initGroupModification(String edit) {
+    click(By.name(edit));
+  }
+
+  public void submitGroupModification(String update) {
+    click(By.name(update));
+  }
 }

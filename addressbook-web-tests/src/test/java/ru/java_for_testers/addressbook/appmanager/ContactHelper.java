@@ -37,4 +37,12 @@ public class ContactHelper extends HelperBase{
   public void selectGroupOrContact(String s) {
     click(By.name(s));
   }
+
+  public void initContactModification(By xpath) {
+    click(xpath);
+  }
+
+  public void submitContactModification(By xpath) {
+    click(xpath);
+  }
 }
