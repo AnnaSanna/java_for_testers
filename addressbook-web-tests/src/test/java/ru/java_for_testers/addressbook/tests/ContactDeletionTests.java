@@ -10,7 +10,7 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectGroupOrContact("selected[]");
     app.getContactHelper().deleteSelectedContacts(By.xpath("//input[@value='Delete']"));
     app.getContactHelper().closeAlertWindow();
-    app.getNavigationHelper().returnToHomePage();
+    app.getNavigationHelper().goToHomePage();
   }
 
 }
