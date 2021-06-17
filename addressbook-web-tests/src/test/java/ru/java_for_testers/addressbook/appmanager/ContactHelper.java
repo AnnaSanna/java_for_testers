@@ -38,8 +38,8 @@ public class ContactHelper extends HelperBase{
     closeWindow();
   }
 
-  public void deleteSelectedContacts(By xpath) {
-    click(xpath);
+  public void deleteSelectedContacts(String delete) {
+    click(By.xpath("//input[@value='Delete']"));
   }
 
   public void selectGroupOrContact(String s) {
@@ -48,9 +48,20 @@ public class ContactHelper extends HelperBase{
 
   public void initContactModification(String edit) {
     click(By.xpath("//img[@alt='Edit']"));
+//    click(By.name("Edit"));
   }
 
   public void submitContactModification(String update) {
     click(By.xpath("//input[@name='update']"));
+  }
+
+  public void createContact(ContactData contact, boolean b) {
+    initContactCreation("add new");
+    fillContactForm(contact, true);
+    submitContactCreation("(//input[@name='submit'])[2]");
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected"));
   }
 }
