@@ -1,5 +1,6 @@
 package ru.java_for_testers.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.java_for_testers.addressbook.model.ContactData;
 
