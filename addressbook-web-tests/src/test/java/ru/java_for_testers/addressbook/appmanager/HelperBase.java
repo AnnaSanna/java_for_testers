@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
   protected WebDriver wd;
+  protected boolean acceptNextAlert = true;
+
 
   public HelperBase(WebDriver wd) {
     this.wd = wd;

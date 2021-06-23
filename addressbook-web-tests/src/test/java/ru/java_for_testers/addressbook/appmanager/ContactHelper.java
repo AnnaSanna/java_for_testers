@@ -1,10 +1,13 @@
 package ru.java_for_testers.addressbook.appmanager;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.java_for_testers.addressbook.model.ContactData;
+
+import static org.testng.Assert.assertTrue;
 
 public class ContactHelper extends HelperBase{
 
@@ -35,15 +38,32 @@ public class ContactHelper extends HelperBase{
   }
 
   public void closeAlertWindow() {
-    closeWindow();
+ //   closeWindow();
+    assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+    acceptNextAlert = true;
+  }
+
+  private String closeAlertAndGetItsText() {
+    try {
+      Alert alert = wd.switchTo().alert();
+      String alertText = alert.getText();
+      if (acceptNextAlert) {
+        alert.accept();
+      } else {
+        alert.dismiss();
+      }
+      return alertText;
+    } finally {
+      acceptNextAlert = true;
+    }
   }
 
   public void deleteSelectedContacts(String delete) {
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void selectGroupOrContact(String s) {
-    click(By.name(s));
+  public void selectGroupOrContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void initContactModification(String edit) {
@@ -62,6 +82,10 @@ public class ContactHelper extends HelperBase{
   }
 
   public boolean isThereAContact() {
-    return isElementPresent(By.name("selected"));
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
   }
 }
