@@ -4,6 +4,8 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.java_for_testers.addressbook.model.ContactData;
 
+import java.util.List;
+
 public class ContactDeletionTests extends TestBase {
 
   @Test
@@ -13,14 +15,14 @@ public class ContactDeletionTests extends TestBase {
       app.getContactHelper().createContact(new ContactData("first name", "last name", "address", "telephone", "email", "test1"), true);
     }
     app.getNavigationHelper().goToHomePage();
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectGroupOrContact(before - 1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().selectGroupOrContact(before.size() - 1);
     app.getContactHelper().deleteSelectedContacts("delete");
     app.getContactHelper().closeAlertWindow();
     Thread.sleep(1000); //без этого sleep падает тест, т.к. похоже, что удаление проходит асинхронно
     app.getNavigationHelper().goToHomePage();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before - 1);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size() - 1);
   }
 
 }
