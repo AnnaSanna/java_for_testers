@@ -2,9 +2,7 @@ package ru.java_for_testers.addressbook.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.openqa.selenium.*;
 import ru.java_for_testers.addressbook.model.ContactData;
-import ru.java_for_testers.addressbook.model.GroupData;
 
 public class ContactDeletionTests extends TestBase {
 
@@ -19,6 +17,7 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectGroupOrContact(before - 1);
     app.getContactHelper().deleteSelectedContacts("delete");
     app.getContactHelper().closeAlertWindow();
+    Thread.sleep(1000); //без этого sleep падает тест, т.к. похоже, что удаление проходит асинхронно
     app.getNavigationHelper().goToHomePage();
     int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before - 1);

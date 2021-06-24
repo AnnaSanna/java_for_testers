@@ -43,7 +43,7 @@ public class ContactHelper extends HelperBase{
     acceptNextAlert = true;
   }
 
-  private String closeAlertAndGetItsText() {
+  public String closeAlertAndGetItsText() {
     try {
       Alert alert = wd.switchTo().alert();
       String alertText = alert.getText();
