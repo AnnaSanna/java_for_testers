@@ -85,6 +85,17 @@ public class ContactHelper extends HelperBase{
     submitContactCreation("(//input[@name='submit'])[2]");
   }
 
+  public void modifyContact(int index, ContactData contact) {
+    initContactModification(index);
+    fillContactForm(contact, false);
+    submitContactModification("update");
+    returnToHomePage();
+  }
+
+  public void returnToHomePage() {
+    click(By.linkText("home"));
+  }
+
   public boolean isThereAContact() {
     return isElementPresent(By.name("selected[]"));
   }
