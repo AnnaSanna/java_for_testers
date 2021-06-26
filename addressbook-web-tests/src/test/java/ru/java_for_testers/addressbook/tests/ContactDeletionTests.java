@@ -19,7 +19,6 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectGroupOrContact(before.size() - 1);
     app.getContactHelper().deleteSelectedContacts("delete");
     app.getContactHelper().closeAlertWindow();
-    Thread.sleep(1000); //без этого sleep падает тест, т.к. похоже, что удаление проходит асинхронно
     app.getNavigationHelper().goToHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() - 1);

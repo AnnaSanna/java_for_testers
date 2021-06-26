@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.java_for_testers.addressbook.model.ContactData;
-import ru.java_for_testers.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,7 @@ public class ContactHelper extends HelperBase{
  //   closeWindow();
     assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     acceptNextAlert = true;
+    wd.findElement(By.cssSelector("div.msgbox"));
   }
 
   public String closeAlertAndGetItsText() {
