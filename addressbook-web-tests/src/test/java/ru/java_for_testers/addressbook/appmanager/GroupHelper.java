@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.java_for_testers.addressbook.model.GroupData;
 import ru.java_for_testers.addressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends HelperBase{
 
@@ -74,7 +72,7 @@ public class GroupHelper extends HelperBase{
   }
 
   public Groups all() {
-    Groups groups = new Groups;
+    Groups groups = new Groups();
     List <WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText();

@@ -14,12 +14,12 @@ public class Groups extends ForwardingSet<GroupData> {
   }
 
   public Groups() {
-    this.delegate = new HashSet<GroupData>();
+    this.delegate = new HashSet<>();
   }
 
   @Override
   protected Set<GroupData> delegate() {
-    return null;
+    return delegate;
   }
 
   public Groups withAdded(GroupData group) {
