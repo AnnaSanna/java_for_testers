@@ -99,15 +99,15 @@ public class ContactData {
     return group;
   }
 
-  public String homePhone() {
+  public String getHomePhone() {
     return homePhone;
   }
 
-  public String mobilePhone() {
+  public String getMobilePhone() {
     return mobilePhone;
   }
 
-  public String workPhone() {
+  public String getWorkPhone() {
     return workPhone;
   }
 
