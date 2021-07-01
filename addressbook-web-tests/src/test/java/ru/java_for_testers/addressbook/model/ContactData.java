@@ -16,8 +16,6 @@ public class ContactData {
   private String email3;
   private String allEmails;
 
-
-
   public ContactData withAllPhones(String allPhones) {
     this.allPhones = allPhones;
     return this;
