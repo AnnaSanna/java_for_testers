@@ -49,7 +49,7 @@ public class ContactDataGenerator {
   private List<ContactData> generateContacts(int count) {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
-      contacts.add(new ContactData().withLastName(String.format("test %s", i))
+      contacts.add(new ContactData().withLastName(String.format("last name %s", i))
               .withFirstName(String.format("first name %s", i)));
     }
     return contacts;

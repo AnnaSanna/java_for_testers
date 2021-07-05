@@ -3,23 +3,37 @@ package ru.java_for_testers.addressbook.tests;
 import org.testng.annotations.*;
 import ru.java_for_testers.addressbook.model.ContactData;
 import ru.java_for_testers.addressbook.model.Contacts;
+import ru.java_for_testers.addressbook.model.GroupData;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
-  @Test
-  public void testContactCreation() throws Exception {
+  @DataProvider
+  public Iterator<Object[]> validContacts() {
+    List<Object[]> list = new ArrayList<Object[]>();
+    list.add(new Object[] {new ContactData().withFirstName("first name 1").withLastName("last name 1").withGroup("test1")});
+    list.add(new Object[] {new ContactData().withFirstName("first name 2").withLastName("last name 2").withGroup("test1")});
+    list.add(new Object[] {new ContactData().withFirstName("first name 3").withLastName("last name 3").withGroup("test1")});
+    return list.iterator();
+  }
+
+
+  @Test(dataProvider = "validContacts")
+  public void testContactCreation(ContactData contact) throws Exception {
     app.goTo().homePage();
     Contacts before = app.contact().all();
     File photo = new File("src/test/resources/photo.jpg");
 
-    ContactData contact = new ContactData()
-              .withFirstName("first name").withLastName("last name").withAddress("address").withTelephone("telephone").withEmail("email").withGroup("test1")
-              .withPhoto(photo);
+ //   ContactData contact = new ContactData()
+ //             .withFirstName("first name").withLastName("last name").withAddress("address").withTelephone("telephone").withEmail("email").withGroup("test1")
+ //             .withPhoto(photo);
     app.contact().create(contact, true);
     app.goTo().homePage();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
