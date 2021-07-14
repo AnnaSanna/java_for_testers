@@ -4,8 +4,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 import ru.java_for_testers.addressbook.model.ContactData;
 import ru.java_for_testers.addressbook.model.Contacts;
 
@@ -27,16 +25,20 @@ public class ContactHelper extends HelperBase{
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("address"), contactData.getAddress());
-    type(By.name("home"), contactData.getTelephone());
+    type(By.name("home"), contactData.getHomePhone());
+    type(By.name("mobile"), contactData.getMobilePhone());
+    type(By.name("work"), contactData.getWorkPhone());
     type(By.name("email"), contactData.getEmail());
-    attach(By.name("photo"), contactData.getPhoto());
-
-
-    if (creation) {
+    type(By.name("email2"), contactData.getEmail2());
+    type(By.name("email3"), contactData.getEmail3());
+//    type(By.name("home"), contactData.getTelephone());
+//    type(By.name("email"), contactData.getEmail());
+//    attach(By.name("photo"), contactData.getPhoto());
+/*    if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new group")));
-    }
+    }*/
   }
 
   public void initContactCreation(String s) {
@@ -90,7 +92,7 @@ public class ContactHelper extends HelperBase{
     contactCache = null;
   }
 
-  public void modify( ContactData contact) {
+  public void modify(ContactData contact) {
     initContactModificationById(contact.getId());
     fillContactForm(contact, false);
     submitContactModification("update");

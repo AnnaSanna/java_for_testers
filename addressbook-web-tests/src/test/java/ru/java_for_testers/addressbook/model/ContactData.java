@@ -7,9 +7,6 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 @XStreamAlias("group")
 @Entity
@@ -59,6 +56,7 @@ public class ContactData {
 
   @Expose
   @Transient
+  @Type(type = "text")
   private String allPhones;
 
   @Expose
@@ -78,16 +76,14 @@ public class ContactData {
 
   @Expose
   @Transient
+  @Type(type = "text")
   private String allEmails;
 
-
   @Column(name = "photo")
+  @Transient
   @Type(type = "text")
   private String photo;
 
-  public File getPhoto() {
-    return new File (photo);
-  }
 
   public ContactData withPhoto(File photo) {
     this.photo = photo.getPath();
@@ -170,7 +166,13 @@ public class ContactData {
             "id=" + id +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", photo='" + photo + '\'' +
+            ", address='" + address + '\'' +
+            ", homePhone='" + homePhone + '\'' +
+            ", mobilePhone='" + mobilePhone + '\'' +
+            ", workPhone='" + workPhone + '\'' +
+            ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
             '}';
   }
 
@@ -230,6 +232,10 @@ public class ContactData {
     return allPhones;
   }
 
+  public File getPhoto() {
+    return new File (photo);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -242,18 +248,13 @@ public class ContactData {
     if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
     if (address != null ? !address.equals(that.address) : that.address != null) return false;
     if (telephone != null ? !telephone.equals(that.telephone) : that.telephone != null) return false;
-    if (group != null ? !group.equals(that.group) : that.group != null) return false;
     if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
     if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
     if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
-    if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
     if (email != null ? !email.equals(that.email) : that.email != null) return false;
     if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
-    if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
-    if (allEmails != null ? !allEmails.equals(that.allEmails) : that.allEmails != null) return false;
-    return photo != null ? getPhoto().equals(that.photo) : that.photo == null;
+    return email3 != null ? email3.equals(that.email3) : that.email3 == null;
   }
-  
 
   @Override
   public int hashCode() {
@@ -262,16 +263,12 @@ public class ContactData {
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
     result = 31 * result + (address != null ? address.hashCode() : 0);
     result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-    result = 31 * result + (group != null ? group.hashCode() : 0);
     result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
     result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
     result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
-    result = 31 * result + (allPhones != null ? allPhones.hashCode() : 0);
     result = 31 * result + (email != null ? email.hashCode() : 0);
     result = 31 * result + (email2 != null ? email2.hashCode() : 0);
     result = 31 * result + (email3 != null ? email3.hashCode() : 0);
-    result = 31 * result + (allEmails != null ? allEmails.hashCode() : 0);
-    result = 31 * result + (photo != null ? photo.hashCode() : 0);
     return result;
   }
 }
