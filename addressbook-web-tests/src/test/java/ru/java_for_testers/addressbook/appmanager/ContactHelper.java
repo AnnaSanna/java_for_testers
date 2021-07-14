@@ -4,6 +4,8 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.java_for_testers.addressbook.model.ContactData;
 import ru.java_for_testers.addressbook.model.Contacts;
 
@@ -34,11 +36,14 @@ public class ContactHelper extends HelperBase{
 //    type(By.name("home"), contactData.getTelephone());
 //    type(By.name("email"), contactData.getEmail());
 //    attach(By.name("photo"), contactData.getPhoto());
-/*    if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    if (creation) {
+      if (contactData.getGroups().size() > 0 ) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new group")));
-    }*/
+    }
   }
 
   public void initContactCreation(String s) {

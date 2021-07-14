@@ -12,6 +12,7 @@ import java.util.Set;
 @XStreamAlias("group")
 @Entity
 @Table(name = "group_list")
+
 public class GroupData {
   @XStreamOmitField
   @Id
@@ -28,11 +29,11 @@ public class GroupData {
   @Expose
   @Column(name = "group_footer")
   @Type(type = "text")
+  private String footer;
 
   @ManyToMany(mappedBy = "groups")
   private Set<ContactData> contacts = new HashSet<ContactData>();
 
-  private String footer;
 
   public GroupData withName(String name) {
     this.name = name;

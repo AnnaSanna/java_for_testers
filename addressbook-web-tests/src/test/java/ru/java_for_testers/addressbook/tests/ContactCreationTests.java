@@ -6,6 +6,8 @@ import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.*;
 import ru.java_for_testers.addressbook.model.ContactData;
 import ru.java_for_testers.addressbook.model.Contacts;
+import ru.java_for_testers.addressbook.model.GroupData;
+import ru.java_for_testers.addressbook.model.Groups;
 
 import java.io.*;
 import java.util.Iterator;
@@ -49,22 +51,32 @@ public class ContactCreationTests extends TestBase {
   }
 
 
-  @Test(dataProvider = "validContactsFromJson")
-  public void testContactCreation(ContactData contact) throws Exception {
+ // @Test(dataProvider = "validContactsFromJson")
+  @Test
+  public void testContactCreation() throws Exception {
     app.goTo().homePage();
     Contacts before = app.db().contacts();
+    Groups groups = app.db().groups();
 
-    //   File photo = new File("src/test/resources/photo.jpg");
- //   ContactData contact = new ContactData()
- //             .withFirstName("first name").withLastName("last name").withAddress("address").withTelephone("telephone").withEmail("email").withGroup("test1")
- //             .withPhoto(photo);
+ //   File photo = new File("src/test/resources/photo.jpg");
+    ContactData newContact = new ContactData()
+            .withFirstName("first name")
+            .withLastName("last name")
+            .withAddress("address")
+            .withHomePhone("homePhone")
+            .withMobilePhone("mobilePhone")
+            .withWorkPhone("workPhone")
+            .withEmail("email")
+            .withEmail2("email2")
+            .withEmail3("email3")
+            .inGroup(groups.iterator().next());
 
-    app.contact().create(contact, true);
+    app.contact().create(newContact, true);
     app.goTo().homePage();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+            before.withAdded(newContact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     verifyContactListInUI();
   }
 
