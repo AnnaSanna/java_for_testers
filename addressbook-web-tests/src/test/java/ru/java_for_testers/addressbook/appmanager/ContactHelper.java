@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.java_for_testers.addressbook.model.ContactData;
 import ru.java_for_testers.addressbook.model.Contacts;
+import ru.java_for_testers.addressbook.model.GroupData;
+import ru.java_for_testers.addressbook.model.Groups;
 
 import java.util.List;
 
@@ -167,5 +169,10 @@ public class ContactHelper extends HelperBase{
             .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work)
             .withEmail(email).withEmail2(email2).withEmail3(email3)
             .withAddress(address);
+  }
+
+  public void addContactToGroup(int contactId) {
+    selectGroupOrContactById(contactId);
+    wd.findElement(By.name("add")).click();
   }
 }

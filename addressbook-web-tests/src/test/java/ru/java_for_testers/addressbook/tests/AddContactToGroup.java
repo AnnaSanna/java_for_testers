@@ -10,16 +10,19 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AddContactToGroup extends TestBase{
-
+public class AddContactToGroup extends TestBase {
 
 
   @BeforeMethod
   public void ensurePreconditions() {
-//    if (app.db().contacts().size() == 0) {
-//      app.goTo().homePage();
-//      app.contact().create(new ContactData().withFirstName("first name"), true);
-//    }
+    if (app.db().groups().size() == 0) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test1"));
+    }
+    if (app.db().contacts().size() == 0) {
+      app.goTo().homePage();
+      app.contact().create(new ContactData().withFirstName("first name"), true);
+    }
   }
 
   @Test
@@ -31,16 +34,12 @@ public class AddContactToGroup extends TestBase{
     Groups beforeGroups = app.db().groups();
     GroupData groupToAdd = beforeGroups.iterator().next();
 
-    app.contact().selectGroupOrContactById(contactToAdd.getId());
-    app.wd.findElement(By.name("add")).click();
- //   new Select(app.wd.findElement(By.name("add"))).selectByVisibleText(groupToAdd.getName());
+    app.contact().addContactToGroup(contactToAdd.getId());
     Addresses afterAddresses = app.db().addressInGroups();
     AddressInGroups created = afterAddresses
             .stream()
-            .filter(s -> s.getId() == contactToAdd.getId() && s.getGroup_id() == groupToAdd.getId())
+            .filter(s -> s.getId() == contactToAdd.getId() && s.getGroupId() == groupToAdd.getId())
             .collect(Collectors.toList()).get(0);
-
     assertThat(created, notNullValue());
-
   }
 }

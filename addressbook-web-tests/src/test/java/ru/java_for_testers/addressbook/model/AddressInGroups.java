@@ -21,14 +21,14 @@ public class AddressInGroups {
 
   @Expose
   @Column(name = "group_id")
-  private int group_id;
+  private int groupId;
 
   public int getId() {
     return id;
   }
 
-  public int getGroup_id() {
-    return group_id;
+  public int getGroupId() {
+    return groupId;
   }
 
   @Override
@@ -39,13 +39,13 @@ public class AddressInGroups {
     AddressInGroups that = (AddressInGroups) o;
 
     if (id != that.id) return false;
-    return group_id == that.group_id;
+    return groupId == that.groupId;
   }
 
   @Override
   public int hashCode() {
     int result = id;
-    result = 31 * result + group_id;
+    result = 31 * result + groupId;
     return result;
   }
 }
