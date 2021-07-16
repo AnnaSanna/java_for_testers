@@ -28,6 +28,11 @@ public class AddContactToGroup extends TestBase {
   @Test
   public void testAddContactToGroup() {
     app.goTo().homePage();
+
+    if (app.db().contacts().iterator().next().getGroups() == 0) {
+
+    }
+
     Contacts beforeContacts = app.db().contacts();
     ContactData contactToAdd = beforeContacts.iterator().next();
 
