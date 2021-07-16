@@ -39,12 +39,4 @@ public class DbHelper {
     return new Contacts(result);
   }
 
-  public Addresses addressInGroups() {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
-    List<AddressInGroups> result = session.createQuery( "from AddressInGroups" ).list();
-    session.getTransaction().commit();
-    session.close();
-    return new Addresses(result);
-  }
 }

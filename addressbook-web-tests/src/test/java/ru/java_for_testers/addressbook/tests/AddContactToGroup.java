@@ -5,46 +5,47 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.java_for_testers.addressbook.model.*;
 
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddContactToGroup extends TestBase {
 
+  ContactData contact;
+  GroupData group;
 
   @BeforeMethod
   public void ensurePreconditions() {
-    if (app.db().groups().size() == 0) {
+    Groups groups = app.db().groups();
+    if (groups.size() == 0) {
       app.goTo().groupPage();
       app.group().create(new GroupData().withName("test1"));
     }
-    if (app.db().contacts().size() == 0) {
+    Contacts contacts = app.db().contacts();
+    Optional<ContactData> contactOpt = contacts.stream().filter(c -> c.getGroups().size() < groups.size()).findFirst();
+    if(contactOpt.isPresent()) contact = contactOpt.get();
+    else {
       app.goTo().homePage();
       app.contact().create(new ContactData().withFirstName("first name"), true);
+      Contacts allContacts = app.db().contacts();
+      int lastId = allContacts.stream().map(c -> c.getId()).max(Comparator.naturalOrder()).get();
+      contact = allContacts.stream().filter(c -> c.getId() == lastId).findAny().get();
     }
+
+    Groups allGroups = app.db().groups();
+    group = allGroups.stream().filter(g -> !g.getContacts().contains(contact)).findAny().get();
   }
 
   @Test
   public void testAddContactToGroup() {
     app.goTo().homePage();
+    app.contact().addContactToGroup(contact.getId());
 
-    if (app.db().contacts().iterator().next().getGroups() == 0) {
-
-    }
-
-    Contacts beforeContacts = app.db().contacts();
-    ContactData contactToAdd = beforeContacts.iterator().next();
-
-    Groups beforeGroups = app.db().groups();
-    GroupData groupToAdd = beforeGroups.iterator().next();
-
-    app.contact().addContactToGroup(contactToAdd.getId());
-    Addresses afterAddresses = app.db().addressInGroups();
-    AddressInGroups created = afterAddresses
-            .stream()
-            .filter(s -> s.getId() == contactToAdd.getId() && s.getGroupId() == groupToAdd.getId())
-            .collect(Collectors.toList()).get(0);
-    assertThat(created, notNullValue());
+    ContactData updatedContact = app.db().contacts().stream().filter(c -> c.getId() == contact.getId()).findFirst().get();
+    assertThat(contact.getGroups().withAdded(group), equalTo(updatedContact.getGroups()));
   }
 }
