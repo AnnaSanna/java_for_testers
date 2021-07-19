@@ -5,10 +5,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.java_for_testers.addressbook.model.*;
-
 import java.util.Comparator;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,8 +43,7 @@ public class DeleteContactFromGroup extends TestBase {
   public void testDeleteContactFromGroup() {
     app.goTo().homePage();
     new Select(app.wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
-    app.contact().selectGroupOrContactById(contact.getId());
-    app.wd.findElement(By.name("remove")).click();
+    app.contact().deleteContactFromGroup(contact.getId());
     ContactData updatedContact = app.db().contacts().stream().filter(c -> c.getId() == contact.getId()).findFirst().get();
 
     assertThat(contact.getGroups().without(group), equalTo(updatedContact.getGroups()));
