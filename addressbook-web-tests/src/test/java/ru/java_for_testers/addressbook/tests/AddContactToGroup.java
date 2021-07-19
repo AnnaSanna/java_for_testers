@@ -39,7 +39,7 @@ public class AddContactToGroup extends TestBase {
   @Test
   public void testAddContactToGroup() {
     app.goTo().homePage();
-    app.contact().addContactToGroup(contact.getId());
+    app.contact().addContactToGroup(contact.getId(), group.getName());
 
     ContactData updatedContact = app.db().contacts().stream().filter(c -> c.getId() == contact.getId()).findFirst().get();
     assertThat(contact.getGroups().withAdded(group), equalTo(updatedContact.getGroups()));

@@ -33,17 +33,16 @@ public class DeleteContactFromGroup extends TestBase {
       int lastId = allContacts.stream().map(c -> c.getId()).max(Comparator.naturalOrder()).get();
       contact = allContacts.stream().filter(c -> c.getId() == lastId).findAny().get();
       app.goTo().homePage();
-      app.contact().addContactToGroup(contact.getId());
       Groups allGroups = app.db().groups();
-      group = allGroups.stream().filter(g -> g.getContacts().contains(contact)).findAny().get();
+      group = allGroups.stream().filter(g -> !g.getContacts().contains(contact)).findAny().get();
+      app.contact().addContactToGroup(contact.getId(), group.getName());
     }
   }
 
   @Test
   public void testDeleteContactFromGroup() {
     app.goTo().homePage();
-    new Select(app.wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
-    app.contact().deleteContactFromGroup(contact.getId());
+    app.contact().deleteContactFromGroup(contact.getId(), group.getName());
     ContactData updatedContact = app.db().contacts().stream().filter(c -> c.getId() == contact.getId()).findFirst().get();
 
     assertThat(contact.getGroups().without(group), equalTo(updatedContact.getGroups()));

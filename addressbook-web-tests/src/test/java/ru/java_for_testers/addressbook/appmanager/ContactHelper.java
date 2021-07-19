@@ -169,12 +169,14 @@ public class ContactHelper extends HelperBase{
             .withAddress(address);
   }
 
-  public void addContactToGroup(int contactId) {
+  public void addContactToGroup(int contactId, String groupName) {
     selectGroupOrContactById(contactId);
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
     wd.findElement(By.name("add")).click();
   }
 
-  public void deleteContactFromGroup(int contactId) {
+  public void deleteContactFromGroup(int contactId, String groupName) {
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
     selectGroupOrContactById(contactId);
     wd.findElement(By.name("remove")).click();
   }
