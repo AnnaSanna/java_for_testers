@@ -23,6 +23,7 @@ public class ApplicationManager {
   private JamesHelper jamesHelper;
   private ChangePasswordHelper changePasswordHelper;
   private DbHelper dbHelper;
+  private SoapHelper soapHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -63,19 +64,19 @@ public class ApplicationManager {
   }
 
   public WebDriver getDriver() {
-      if (wd == null) {
-        if (browser.equals(BrowserType.FIREFOX)) {
-          wd = new FirefoxDriver();
-        } else if (browser.equals(BrowserType.CHROME)) {
-          wd = new ChromeDriver();
-        } else if (browser.equals(BrowserType.IE)) {
-          wd = new InternetExplorerDriver();
-        }
-        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wd.get(properties.getProperty("web.baseUrl"));
+    if (wd == null) {
+      if (browser.equals(BrowserType.FIREFOX)) {
+        wd = new FirefoxDriver();
+      } else if (browser.equals(BrowserType.CHROME)) {
+        wd = new ChromeDriver();
+      } else if (browser.equals(BrowserType.IE)) {
+        wd = new InternetExplorerDriver();
       }
-    return wd;
+      wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+      wd.get(properties.getProperty("web.baseUrl"));
     }
+    return wd;
+  }
 
   public MailHelper mail() {
     if (mailHelper == null) {
@@ -84,12 +85,12 @@ public class ApplicationManager {
     return mailHelper;
   }
 
-    public JamesHelper james() {
-        if (jamesHelper == null) {
-            jamesHelper = new JamesHelper(this);
-        }
-        return jamesHelper;
+  public JamesHelper james() {
+    if (jamesHelper == null) {
+      jamesHelper = new JamesHelper(this);
     }
+    return jamesHelper;
+  }
 
   public ChangePasswordHelper changePassword() {
     if (changePasswordHelper == null) {
@@ -102,4 +103,11 @@ public class ApplicationManager {
     dbHelper = new DbHelper(this);
     return dbHelper;
   }
+
+  public SoapHelper soap() {
+    if (soapHelper == null) {
+      soapHelper = new SoapHelper(this);
+    }
+    return soapHelper;
   }
+}
